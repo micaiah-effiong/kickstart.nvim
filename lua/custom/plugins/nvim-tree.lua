@@ -17,7 +17,7 @@ local function on_nvim_tree_attach(bufnr)
 	vim.keymap.set('n', '<C-b>', api.tree.toggle, opts('Toggle tree'))
 end
 
-return {
+--[[ return {
 	"nvim-tree/nvim-tree.lua",
 	version = "*",
 	--
@@ -33,7 +33,22 @@ return {
 				enable = true
 			},
 			respect_buf_cwd = true,
+
+
+			-- toggle nvim tree
+			vim.keymap.set(
+				'n', '<C-b>',
+				require('nvim-tree.api').tree.toggle,
+				{
+					desc = 'nvim-tree: Toggle tree',
+					noremap = true,
+					silent = true,
+					nowait = true
+				}
+			),
 			on_attach = on_nvim_tree_attach,
 		}
 	end,
-}
+} ]]
+
+return {}
