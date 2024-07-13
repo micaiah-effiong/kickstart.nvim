@@ -10,7 +10,7 @@ return {
 	opts = {
 		-- configurations go here
 	},
-	config = function ()
-	 require('barbecue').setup {}
+	config = function()
+		require('barbecue').setup {}
 	end
 }
