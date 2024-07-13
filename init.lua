@@ -122,15 +122,6 @@ require('lazy').setup({
     },
   },
 
-  {
-    'brenoprata10/nvim-highlight-colors',
-    config = function()
-      require('nvim-highlight-colors').setup({
-        render = 'virtual',
-      })
-    end
-  },
-
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim',  opts = {} },
 
