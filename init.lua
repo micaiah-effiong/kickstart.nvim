@@ -74,16 +74,17 @@ vim.opt.rtp:prepend(lazypath)
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
-
   -- Git related plugins
-  'tpope/vim-fugitive',
-  -- 'tpope/vim-rhubarb',
+  {
+    'tpope/vim-fugitive',
+    config = function()
+      vim.keymap.set('n', '<leader>gs', ':G<CR>')
+      vim.keymap.set('n', '<leader>gb', ':G blame<CR>')
+    end
+  },
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
-
-
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim',   opts = {} },
