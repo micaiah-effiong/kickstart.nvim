@@ -9,5 +9,8 @@ return {
 	},
 	init = function()
 		vim.cmd.colorscheme 'onedark'
+		require('which-key').add({
+			{ '<leader>ts', desc = "Toggle onedark theme style", mode = "n" }
+		})
 	end
 }
