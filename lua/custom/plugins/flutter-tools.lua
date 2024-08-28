@@ -17,7 +17,7 @@ return {
 			},
 
 			lsp = {
-				on_attach = require('custom.utils'),
+				on_attach = require('custom.utils.lsp_on_attach'),
 			}
 		} -- use default
 		require("telescope").load_extension("flutter")

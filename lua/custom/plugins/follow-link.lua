@@ -1,3 +1,3 @@
 return {
-	'jghauser/follow-md-links.nvim'
+	-- 'jghauser/follow-md-links.nvim'
 }

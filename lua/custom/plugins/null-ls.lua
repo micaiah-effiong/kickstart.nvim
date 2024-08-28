@@ -2,7 +2,7 @@
 -- since the autoformat plugin provided by the kickstart
 -- does not support tsserver (see kickstart.plugins.autoformat)
 -- this is ment to provide safe formatting using prettier.
--- 
+--
 -- This could also be extended to support other languages
 -- but at the moment it serves a a fix for JS (tsserver) formatting
 
