@@ -34,4 +34,15 @@ vim.keymap.set('n', '<leader>cbn', ':let @+ = expand("%:t")<CR>', {
   desc = "[C]opy [B]uffer [N]ame"
 })
 
-vim.keymap.set('n', '<C-b>', ':Lexplore<CR>', { desc = 'Toggle netrw' })
+-- vim.keymap.set('n', '<C-b>', ':Lexplore %:p:h<CR>', { desc = 'Toggle netrw' })
+vim.keymap.set(
+  "n", "<C-b>",
+  function()
+    if vim.api.nvim_buf_get_option(0, "filetype") == "netrw" then
+      vim.api.nvim_exec2(":Lexplore", { output = false })
+    else
+      vim.api.nvim_exec2(":Lexplore %:p:h", { output = false })
+    end
+  end,
+  { desc = 'Toggle netrw', }
+)
