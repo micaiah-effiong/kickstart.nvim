@@ -1,4 +1,4 @@
 return {
-	'braxtons12/blame_line.nvim',
-	opts = {}
+	-- 'braxtons12/blame_line.nvim',
+	-- opts = {}
 }
