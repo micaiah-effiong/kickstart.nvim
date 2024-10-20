@@ -25,17 +25,16 @@ vim.opt.splitbelow = true
 -- horizontal cursorline
 vim.opt.cursorline = true
 
--- disable mouse mode
+-- mouse mode
 vim.o.mouse = ''
+-- -- Enable mouse mode
+-- vim.o.mouse = 'a'
 
 -- Set highlight on search
 vim.o.hlsearch = false
 
 -- Make line numbers default
 vim.wo.number = true
-
--- Enable mouse mode
-vim.o.mouse = 'a'
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
