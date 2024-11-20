@@ -14,7 +14,7 @@ return {
 
 		null_ls.setup({
 			sources = {
-				formatter.prettier,
+				formatter.prettierd,
 				-- null_ls.builtins.diagnostics.eslint,
 				-- null_ls.builtins.completion.spell,
 			},
