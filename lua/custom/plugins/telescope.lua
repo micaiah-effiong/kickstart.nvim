@@ -1,3 +1,19 @@
+-- Custom git_files function to search cwd
+local function telescope_find_git_files_in_cwd()
+	require('telescope.builtin').git_files {
+		use_git_root = false,
+		prompt_title = 'Find git files in current workspace',
+	}
+end
+
+-- Custom find_files function to search cwd
+local function telescope_find_files_in_cwd()
+	require('telescope.builtin').find_files {
+		cwd = vim.fn.getcwd(),
+		prompt_title = 'Find files in current workspace',
+	}
+end
+
 -- Custom live_grep function to search in git root
 local function telescope_live_grep_open_files()
 	require('telescope.builtin').live_grep {
@@ -75,12 +91,8 @@ return {
 			},
 		}
 
-
-
 		-- Enable telescope fzf native, if installed
 		pcall(require('telescope').load_extension, 'fzf')
-
-
 
 		vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 
@@ -99,6 +111,8 @@ return {
 		vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]earch [/] in Open Files' })
 		vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope' })
 		vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+		vim.keymap.set('n', '<leader>scg', telescope_find_git_files_in_cwd, { desc = '[S]earch [C]urrrent [G]it Files' })
+		vim.keymap.set('n', '<leader>scf', telescope_find_files_in_cwd, { desc = '[S]earch [C]urrent [F]iles' })
 		vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 		vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 		vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
