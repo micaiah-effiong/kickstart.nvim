@@ -33,6 +33,10 @@ local autoformat = function()
       local client = vim.lsp.get_client_by_id(client_id)
       local bufnr = args.buf
 
+      if client == nil then
+        return
+      end
+
       -- Only attach to clients that support document formatting
       if not client.server_capabilities.documentFormattingProvider then
         return
@@ -40,9 +44,10 @@ local autoformat = function()
 
       -- Tsserver usually works poorly. Sorry you work with bad languages
       -- You can remove this line if you know what you're doing :)
-      if client.name == 'tsserver' then
-        return
-      end
+      -- if client.name == 'ts_ls' then
+      --   print("client name " .. client.name)
+      --   return
+      -- end
 
       -- Create an autocmd that will run *before* we save the buffer.
       --  Run the formatting command for the LSP that has just attached.
