@@ -44,10 +44,9 @@ local autoformat = function()
 
       -- Tsserver usually works poorly. Sorry you work with bad languages
       -- You can remove this line if you know what you're doing :)
-      -- if client.name == 'ts_ls' then
-      --   print("client name " .. client.name)
-      --   return
-      -- end
+      if client.name == 'ts_ls' then
+        return
+      end
 
       -- Create an autocmd that will run *before* we save the buffer.
       --  Run the formatting command for the LSP that has just attached.
