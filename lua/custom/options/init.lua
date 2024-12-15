@@ -63,3 +63,10 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    vim.opt.number = false
+    vim.opt.relativenumber = false
+  end
+})
