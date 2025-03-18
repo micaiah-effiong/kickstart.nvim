@@ -34,6 +34,13 @@ vim.keymap.set('n', '<leader>cbn', ':let @+ = expand("%:t")<CR>', {
   desc = "[C]opy [B]uffer [N]ame"
 })
 
+vim.keymap.set('n', '<leader>ccb',
+  function()
+    vim.api.nvim_buf_delete(0, {})
+  end,
+  { desc = "[C]lose [C]urrent [B]uffer" }
+)
+
 -- vim.keymap.set('n', '<C-b>', ':Lexplore %:p:h<CR>', { desc = 'Toggle netrw' })
 vim.keymap.set(
   "n", "<C-b>",
