@@ -1,7 +1,7 @@
 return {
 	'williamboman/mason-lspconfig',
+version="v1.32.0",
 	opts = {
-		automatic_enable = false,
 		ensure_installed = {
 			"bashls",
 			"eslint",

@@ -54,7 +54,6 @@ return {
 		-- before setting up the servers.
 		require('mason').setup()
 		require('mason-lspconfig').setup({
-			automatic_enable = false,
 			handlers = {
 				function(server_name)
 					require('lspconfig')[server_name].setup {
