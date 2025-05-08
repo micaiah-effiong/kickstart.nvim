@@ -1,6 +1,6 @@
 return {
 	'williamboman/mason-lspconfig',
-version="v1.32.0",
+	version = "v1.32.0",
 	opts = {
 		ensure_installed = {
 			"bashls",
