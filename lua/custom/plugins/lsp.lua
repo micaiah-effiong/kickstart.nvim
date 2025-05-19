@@ -23,6 +23,14 @@ local servers = {
 			-- diagnostics = { disable = { 'missing-fields' } },
 		},
 	},
+
+	rust_analyzer = {
+		["rust-analyzer"] = {
+			checkOnSave = {
+				command = "clippy",
+			},
+		},
+	},
 }
 
 -- [[ Configure LSP ]]
