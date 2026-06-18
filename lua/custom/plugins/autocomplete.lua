@@ -61,5 +61,3 @@ cmp.setup({
 		documentation = border
 	}
 })
-
-print(vim.inspect(cmp.get_config().window.completion))
