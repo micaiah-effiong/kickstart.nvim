@@ -1,7 +1,4 @@
-return {
-	-- Adds git related signs to the gutter, as well as utilities for managing changes
-	'lewis6991/gitsigns.nvim',
-	opts = {
+require('gitsigns').setup({
 		-- See `:help gitsigns.txt`
 		signs = {
 			add = { text = '+' },
@@ -70,5 +67,4 @@ return {
 			-- Text object
 			map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
 		end,
-	},
-}
+	})

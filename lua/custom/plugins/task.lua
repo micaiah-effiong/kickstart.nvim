@@ -1,3 +1,1 @@
-return {
-	"micaiah-effiong/task.nvim"
-}
+require('task')

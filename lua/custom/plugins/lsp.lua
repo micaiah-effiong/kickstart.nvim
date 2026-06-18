@@ -1,12 +1,4 @@
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
-
+---@type table<string, vim.lsp.Config>
 local servers = {
 	-- clangd = {},
 	-- gopls = {},
@@ -16,74 +8,49 @@ local servers = {
 	-- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
 	lua_ls = {
-		Lua = {
-			workspace = { checkThirdParty = false },
-			telemetry = { enable = false },
-			-- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-			-- diagnostics = { disable = { 'missing-fields' } },
+		settings = {
+			Lua = {
+				runtime = {
+					version = 'LuaJIT',
+				},
+				diagnostics = {
+					globals = {
+						'vim',
+						'require'
+					},
+				},
+				workspace = {
+					checkThirdParty = false,
+					library = {
+						vim.env.VIMRUNTIME,
+						'${3rd}/luv/library',
+						vim.api.nvim_get_runtime_file("", true),
+					},
+
+				},
+				telemetry = {
+					enable = false,
+				},
+			},
 		},
 	},
 
 	rust_analyzer = {
 		["rust-analyzer"] = {
-			checkOnSave = {
-				command = "clippy",
-			},
+			checkOnSave = true,
 		},
 	},
+
+
+	emmet_language_server = {
+		filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact", "xml" },
+	}
 }
 
--- [[ Configure LSP ]]
---  This function gets run when an LSP connects to a particular buffer.
--- NOTE: This is where your plugins related to LSP can be installed.
---  The configuration is done below. Search for lspconfig to find it below.
-return {
-	-- LSP Configuration & Plugins
-	'neovim/nvim-lspconfig',
-	dependencies = {
-		-- Automatically install LSPs to stdpath for neovim
-		{ 'williamboman/mason.nvim',           config = true },
-		{ 'williamboman/mason-lspconfig.nvim', version = "v1.32.0", },
-
-		-- Useful status updates for LSP
-		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-		{ 'j-hui/fidget.nvim',                 opts = {} },
-
-		-- Additional lua configuration, makes nvim stuff amazing!
-		'folke/neodev.nvim',
-	},
-
-	config = function()
-		-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-		-- mason-lspconfig requires that these setup functions are called in this order
-		-- before setting up the servers.
-		require('mason').setup()
-		require('mason-lspconfig').setup({
-			handlers = {
-				function(server_name)
-					require('lspconfig')[server_name].setup {
-						capabilities = capabilities,
-						on_attach = require('custom.utils.lsp_on_attach'),
-						settings = servers[server_name],
-						filetypes = (servers[server_name] or {}).filetypes,
-					}
-				end
-			}
-		})
-
-		local autoformat = require "custom.utils.autoformat"
-		autoformat()
-
-		-- Setup neovim lua configuration
-		require('neodev').setup()
-
-		-- Ensure the servers above are installed
-		local mason_lspconfig = require 'mason-lspconfig'
-
-		mason_lspconfig.setup { ensure_installed = vim.tbl_keys(servers), }
-	end
-}
---  The configuration is done below. Search for lspconfig to find it below.
+for server_name, config in pairs(servers) do
+	-- print('server_name => ' .. server_name)
+	config.capabilities = vim.lsp.protocol.make_client_capabilities()
+	config.on_attach = require('custom.utils.lsp_on_attach')
+	vim.lsp.config(server_name, config)
+	vim.lsp.enable(server_name)
+end
