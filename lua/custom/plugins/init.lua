@@ -2,6 +2,22 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
-return {
-	-- require('kickstart.plugins.debug')
-}
+require('custom.plugins.autocomplete')
+require('custom.plugins.barbecue')
+require('custom.plugins.blankline')
+require('custom.plugins.bufferline')
+require('custom.plugins.colors')
+require('custom.plugins.db')
+require('custom.plugins.gitsigns')
+require('custom.plugins.lsp')
+require('custom.plugins.markdown-preview')
+require('custom.plugins.markdown')
+require('custom.plugins.mason')
+require('custom.plugins.onedark-theme')
+require('custom.plugins.statusline')
+require('custom.plugins.task')
+require('custom.plugins.telescope')
+require('custom.plugins.todo')
+require('custom.plugins.treesitter')
+require('custom.plugins.trouble')
+require('custom.plugins.vim-fugitive')

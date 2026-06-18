@@ -1,145 +1,46 @@
---[[
+require("vim._core.ui2").enable({})
 
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
-
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- disable netrw at the very start of your init.lua
--- needed for nvim-tree
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
-
--- vim.o.guifont = 'Inconsolata LGC Nerd Font'
-
--- [[ Install `lazy.nvim` plugin manager ]]
---    https://github.com/folke/lazy.nvim
---    `:help lazy.nvim.txt` for more info
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
-    lazypath,
-  }
-end
-vim.opt.rtp:prepend(lazypath)
-
--- [[ Configure plugins ]]
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
-require('lazy').setup({
-  -- Git related plugins
-  {
-    'tpope/vim-fugitive',
-    config = function()
-      vim.keymap.set('n', '<leader>gs', ':G<CR>')
-      vim.keymap.set('n', '<leader>gb', ':G blame<CR>')
-    end
-  },
-
-  -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
-
-  -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',   opts = {} },
-
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help ibl`
-    main = 'ibl',
-    opts = {
-      indent = {
-        char = "┊",
-        -- highlight = {
-        --   "CursorColumn",
-        --   "Whitespace",
-        -- },
-      },
-      scope = {
-        show_start = false,
-      }
-    },
-  },
-
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',  opts = {} },
-
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
-
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  { import = 'custom.plugins' },
-}, {})
-
-
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
+-- -- [[ Highlight on yank ]]
+-- -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
   group = highlight_group,
   pattern = '*',
 })
 
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+
+    if vim.fn.executable 'make' ~= 1 then
+      return
+    end
+
+    if name == 'telescope-fzf-native.nvim' and (kind == 'install' or kind == 'update') then
+      vim.system({ 'make' }, { cwd = ev.data.path })
+    end
+  end
+})
+
+---@param repo string
+local function mod_name(repo)
+  return 'https://github.com/' .. repo
+end
+
+-- NOTE: Load and setup these plugins first
+vim.pack.add({
+  mod_name('folke/which-key.nvim'),
+  mod_name('navarasu/onedark.nvim'),
+  mod_name('j-hui/fidget.nvim'),
+  mod_name('folke/lazydev.nvim'),
+})
+require('custom.plugins.onedark-theme')
 -- document existing key chains
 require('which-key').add({
   { '<leader>c', name = '[C]ode' },
@@ -155,9 +56,88 @@ require('which-key').add({
   -- required for visual <leader>hs (hunk stage) to work
   -- { '<leader>',  group = 'VISUAL <leader>', mode = { 'v' } },
 })
+require('fidget').setup({})
+require('lazydev').setup({
+  library = {
+    { path = vim.env.VIMRUNTIME },
+    { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+  },
+})
 
--- custom settings
-pcall(require('custom.settings'))
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+-- NOTE: Lazy load the rest
+vim.pack.add({
+  mod_name('tpope/vim-fugitive'),
+  mod_name('tpope/vim-sleuth'),
+  mod_name('lukas-reineke/indent-blankline.nvim'),
+
+  -- barbecue
+  mod_name('SmiteshP/nvim-navic'),
+  mod_name('nvim-tree/nvim-web-devicons'),
+  mod_name('utilyre/barbecue.nvim'),
+  --
+
+  -- bufferline
+  mod_name('nvim-tree/nvim-web-devicons'),
+  mod_name('akinsho/bufferline.nvim'),
+  --
+
+  mod_name('lewis6991/gitsigns.nvim'),
+
+  -- render-markdown
+  mod_name('nvim-treesitter/nvim-treesitter'),
+  mod_name('nvim-tree/nvim-web-devicons'),
+  mod_name('MeanderingProgrammer/render-markdown.nvim'),
+  --
+
+  -- render-preview
+  mod_name('selimacerbas/live-server.nvim'),
+  mod_name('selimacerbas/markdown-preview.nvim'),
+  --
+
+  mod_name('micaiah-effiong/task.nvim'),
+  mod_name('nvim-lualine/lualine.nvim'),
+
+  -- todo-comments
+  mod_name('nvim-lua/plenary.nvim'),
+  mod_name('folke/todo-comments.nvim'),
+  --
+
+  mod_name('folke/trouble.nvim'),
+
+  -- telescope
+  mod_name('nvim-lua/plenary.nvim'),
+  mod_name('nvim-telescope/telescope-fzf-native.nvim'),
+  { src = mod_name('nvim-telescope/telescope.nvim'), version = "v0.2.2" },
+  --
+
+  -- meson-lspconfig
+  mod_name('mason-org/mason.nvim'),
+  mod_name('neovim/nvim-lspconfig'),
+  mod_name('mason-org/mason-lspconfig.nvim'),
+  --
+
+  -- nvim-cmp
+  -- Snippet Engine & its associated nvim-cmp source
+  mod_name('L3MON4D3/LuaSnip'),
+  mod_name('saadparwaiz1/cmp_luasnip'),
+  -- Adds LSP completion capabilities
+  mod_name('hrsh7th/cmp-nvim-lsp'),
+  mod_name('hrsh7th/cmp-path'),
+  -- Adds a number of user-friendly snippets
+  mod_name('rafamadriz/friendly-snippets'),
+  mod_name('hrsh7th/nvim-cmp'),
+  --
+
+  -- DB
+  mod_name('ellisonleao/dotenv.nvim'),
+  mod_name('tpope/vim-dadbod'),
+  mod_name('kristijanhusak/vim-dadbod-completion'),
+  mod_name('kristijanhusak/vim-dadbod-ui'),
+  --
+
+  mod_name('brenoprata10/nvim-highlight-colors'),
+})
+
+require('custom.plugins')
+require('custom.settings')

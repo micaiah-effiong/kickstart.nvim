@@ -1,4 +1,1 @@
-return {
-	"folke/trouble.nvim",
-	opts = {}
-}
+require("trouble").setup()
