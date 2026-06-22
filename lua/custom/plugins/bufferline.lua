@@ -1,3 +1,10 @@
+vim.pack.add({
+	-- bufferline
+	Gh('nvim-tree/nvim-web-devicons'),
+	Gh('akinsho/bufferline.nvim'),
+	--
+})
+
 require('bufferline').setup {
 	options = {
 		diagnostics = "nvim_lsp",

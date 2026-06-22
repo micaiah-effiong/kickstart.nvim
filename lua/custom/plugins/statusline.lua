@@ -1,3 +1,7 @@
+vim.pack.add({
+	Gh('nvim-lualine/lualine.nvim'),
+})
+
 local function base_cwd()
 	return require("custom.utils.find_git_root").basename
 end

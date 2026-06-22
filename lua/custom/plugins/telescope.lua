@@ -1,3 +1,9 @@
+vim.pack.add({
+	Gh('nvim-lua/plenary.nvim'),
+	Gh('nvim-telescope/telescope-fzf-native.nvim'),
+	{ src = Gh('nvim-telescope/telescope.nvim'), version = "v0.2.2" },
+})
+
 local telescope_builtin = require('telescope.builtin')
 -- Custom git_files function to search cwd
 local function telescope_find_git_files_in_cwd()

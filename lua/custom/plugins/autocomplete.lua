@@ -1,20 +1,22 @@
+-- nvim-cmp
+-- Snippet Engine & its associated nvim-cmp source
+vim.pack.add({
+	Gh('L3MON4D3/LuaSnip'),
+	Gh('saadparwaiz1/cmp_luasnip'),
+	-- Adds LSP completion capabilities
+	Gh('hrsh7th/cmp-nvim-lsp'),
+	Gh('hrsh7th/cmp-path'),
+	-- Adds a number of user-friendly snippets
+	Gh('rafamadriz/friendly-snippets'),
+	Gh('hrsh7th/nvim-cmp'),
+})
+
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
-
-
-local border = cmp.config.window.bordered({
-	border = "single",
-	col_offset = 0,
-	scrollbar = true,
-	scrolloff = 0,
-	side_padding = 1,
-	winblend = 0,
-	winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None"
-})
 
 cmp.setup({
 	snippet = {
@@ -56,8 +58,4 @@ cmp.setup({
 		{ name = 'luasnip' },
 		{ name = 'path' },
 	},
-	window = {
-		completion = border,
-		documentation = border
-	}
 })

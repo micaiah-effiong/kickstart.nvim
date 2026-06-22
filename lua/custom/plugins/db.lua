@@ -1,3 +1,10 @@
+vim.pack.add({
+	Gh('ellisonleao/dotenv.nvim'),
+	Gh('tpope/vim-dadbod'),
+	Gh('kristijanhusak/vim-dadbod-completion'),
+	Gh('kristijanhusak/vim-dadbod-ui'),
+})
+
 require('dotenv').setup({ enable_on_load = true })
 
 require('cmp').setup.filetype(

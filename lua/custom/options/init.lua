@@ -70,3 +70,13 @@ vim.api.nvim_create_autocmd("TermOpen", {
     vim.opt.relativenumber = false
   end
 })
+
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath('data') .. '/undodir'
+vim.opt.autoread = true
+
+-- vim.opt.undolevels = 10000
+-- vim.opt.undoreload = 10000

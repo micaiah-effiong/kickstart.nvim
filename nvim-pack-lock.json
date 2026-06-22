@@ -28,6 +28,10 @@
       "rev": "7d516e9293c6e3ac21830fb10a4e8674c02747c6",
       "src": "https://github.com/ellisonleao/dotenv.nvim"
     },
+    "dressing.nvim": {
+      "rev": "2d7c2db2507fa3c4956142ee607431ddb2828639",
+      "src": "https://github.com/stevearc/dressing.nvim"
+    },
     "fidget.nvim": {
       "rev": "82404b196e73a00b1727a91903beef5ddc319d22",
       "src": "https://github.com/j-hui/fidget.nvim"
@@ -88,6 +92,10 @@
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
+    "nvim-treesitter-textobjects": {
+      "rev": "851e865342e5a4cb1ae23d31caf6e991e1c99f1e",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+    },
     "nvim-web-devicons": {
       "rev": "dfbfaa967a6f7ec50789bead7ef87e336c1fa63c",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
@@ -105,8 +113,9 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "task.nvim": {
-      "rev": "d28f6a6cc9b8e4cde6e9e3b2db492bff1935dfb8",
-      "src": "https://github.com/micaiah-effiong/task.nvim"
+      "rev": "812e00a8a4a40d62487e6acd6d7887745bf24341",
+      "src": "https://github.com/micaiah-effiong/task.nvim",
+      "version": "'feat/task-files'"
     },
     "telescope-fzf-native.nvim": {
       "rev": "b25b749b9db64d375d782094e2b9dce53ad53a40",

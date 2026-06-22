@@ -1,3 +1,7 @@
+vim.pack.add({
+  Gh('lukas-reineke/indent-blankline.nvim'),
+})
+
 require('ibl').setup({
   indent = {
     char = "┊",
@@ -9,5 +13,4 @@ require('ibl').setup({
   scope = {
     show_start = false,
   }
-
 })

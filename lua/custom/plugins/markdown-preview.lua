@@ -1,3 +1,8 @@
+vim.pack.add({
+	Gh('selimacerbas/live-server.nvim'),
+	Gh('selimacerbas/markdown-preview.nvim'),
+})
+
 require("markdown_preview").setup({
 	instance_mode = "takeover",
 	port = 0,

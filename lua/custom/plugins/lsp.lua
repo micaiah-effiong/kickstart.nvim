@@ -1,3 +1,23 @@
+vim.pack.add({
+	Gh('neovim/nvim-lspconfig'),
+	Gh('mason-org/mason-lspconfig.nvim'),
+	Gh('mason-org/mason.nvim'),
+})
+
+require('mason').setup()
+require('mason-lspconfig').setup({
+	ensure_installed = {
+		"bashls",
+		"eslint",
+		"html",
+		"lua_ls",
+		"rust_analyzer",
+		"tailwindcss",
+		"ts_ls",
+		"emmet_language_server"
+	},
+})
+
 ---@type table<string, vim.lsp.Config>
 local servers = {
 	-- clangd = {},
