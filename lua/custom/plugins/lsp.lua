@@ -4,20 +4,6 @@ vim.pack.add({
 	Gh('mason-org/mason.nvim'),
 })
 
-require('mason').setup()
-require('mason-lspconfig').setup({
-	ensure_installed = {
-		"bashls",
-		"eslint",
-		"html",
-		"lua_ls",
-		"rust_analyzer",
-		"tailwindcss",
-		"ts_ls",
-		"emmet_language_server"
-	},
-})
-
 ---@type table<string, vim.lsp.Config>
 local servers = {
 	-- clangd = {},
@@ -61,16 +47,27 @@ local servers = {
 		},
 	},
 
-
 	emmet_language_server = {
 		filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact", "xml" },
-	}
+	},
+
+	bashls = {},
+	eslint = {},
+	html = {},
+	tailwindcss = {},
+	ts_ls = {},
 }
 
-for server_name, config in pairs(servers) do
-	-- print('server_name => ' .. server_name)
+require('mason').setup()
+local masonlsp_config = require('mason-lspconfig')
+masonlsp_config.setup({ ensure_installed = vim.tbl_keys(servers) })
+
+for _, server_name in ipairs(masonlsp_config.get_installed_servers()) do
+	local config = servers[server_name] or {}
+
 	config.capabilities = vim.lsp.protocol.make_client_capabilities()
 	config.on_attach = require('custom.utils.lsp_on_attach')
+
 	vim.lsp.config(server_name, config)
 	vim.lsp.enable(server_name)
 end

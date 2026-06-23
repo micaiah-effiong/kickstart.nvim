@@ -113,7 +113,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "task.nvim": {
-      "rev": "812e00a8a4a40d62487e6acd6d7887745bf24341",
+      "rev": "9b464bee4576fcbb1b889f6cd9dcad9723d97c43",
       "src": "https://github.com/micaiah-effiong/task.nvim",
       "version": "'feat/task-files'"
     },
