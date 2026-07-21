@@ -83,6 +83,8 @@ require('lazy').setup({
     end
   },
 
+  'stevearc/dressing.nvim',
+
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
